@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moving Eyes</title>
+</head>
+<body>
+  
+  
+ <!-- This is our main SVG canvas, where the magic of the eyes will happen. -->
+<!-- It sets up the size and internal coordinate system for our drawing. --> 
+  
+  <svg id="eyes" width="128" viewbox="0 0 128 128">
+  <defs>
+    <!-- We're defining a subtle dark gradient here, perfect for giving the pupils some depth. -->
+    <linearGradient id="a" x1="0" x2="0" y1="46.676" y2="82.083" gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color:#ff0000"/>
+      <stop offset="1" style="stop-color:#212121"/>
+    </linearGradient>
+
+    <!-- This group defines the basic shape of one eye, including its white part and inner outline. -->
+    <!-- We'll reuse this shape for both the left and right eyes, saving us some typing! -->
+    <g id="eye-shape">
+      <path style="fill:#fafafa" d="M34.16 106.51C18.73 106.51 6.19 87.44 6.19 64s12.55-42.51 27.97-42.51S62.13 40.56 62.13 64s-12.55 42.51-27.97 42.51"/>
+      <path style="fill:#12345" d="M34.16 23.49c6.63 0 12.98 4 17.87 11.27 5.22 7.75 8.1 18.14 8.1 29.24s-2.88 21.49-8.1 29.24c-4.89 7.27-11.24 11.27-17.87 11.27s-12.98-4-17.87-11.27C11.06 85.49 8.19 75.1 8.19 64s2.88-21.49 8.1-29.24c4.89-7.27 11.23-11.27 17.87-11.27m0-4C17.61 19.49 4.19 39.42 4.19 64s13.42 44.51 29.97 44.51S64.13 88.58 64.13 64 50.71 19.49 34.16 19.49"/>
+    </g>
+
+    <!-- This path defines the shape of a single pupil, ready to be filled with our gradient. -->
+    <path id="pupil-shape" style="fill:url(#a)" d="M25.63 59.84c-2.7-2.54-2.1-7.58 1.36-11.26.18-.19.36-.37.55-.54-1.54-.87-3.23-1.36-5.01-1.36-7.19 0-13.02 7.93-13.02 17.7s5.83 17.7 13.02 17.7 13.02-7.93 13.02-17.7c0-1.75-.19-3.45-.54-5.05-3.24 2.33-7.11 2.64-9.38.51"/>
+  </defs>
+    
+    
+     <!-- Here we're drawing the left eye, using the 'eye-shape' we defined earlier. -->
+  <use href="#eye-shape" id="eye-left"/>
+  <!-- And now, we draw the left pupil, using our 'pupil-shape' and its gradient fill. -->
+  <use href="#pupil-shape" id="pupil-left"/>
+    
+    
+<!-- This group holds the right eye and pupil, and we're moving it horizontally to position it. -->
+  <g transform="translate(59.68 0)">
+    <!-- Drawing the right eye, again reusing our defined 'eye-shape'. -->
+    <use href="#eye-shape" id="eye-right" />
+    <!-- And finally, the right pupil, also using its defined shape and gradient. -->
+    <use href="#pupil-shape" id="pupil-right"/>
+  </g>    
+  
+  /* This rule styles our main SVG container for the eyes. */
+  /* --size is a CSS variable, making it easy to control the size of the eyes. */
+  /* clamp() helps the eyes scale nicely between a min (64px) and max (256px) size, */
+  /* while 30vi (30% of viewport inline size) makes them responsive to screen width. */
+  #eyes {
+    --size: clamp(64px, 30vi, 256px);
+    block-size: var(--size); /* Sets the height of the SVG */
+    inline-size: var(--size); /* Sets the width of the SVG */
+  }
+
+  /* These styles are for the entire webpage body. */
+  body {
+    background: aqua; /* Gives our page a nice, warm background color. */
+    block-size: 100vb; /* Ensures the body takes up the full height of the viewport. */
+    display: grid; /* We're using CSS Grid to easily center and arrange content. */
+    grid-template-rows: 2fr 1fr; /* Divides the page into two rows: the top one twice as tall. */
+    place-items: center; /* Centers everything both horizontally and vertically within its grid area. */
+    text-align: center; /* Ensures any inline text content is centered. */
+  }
+
+  /* This styles the 'What's this about?' link. */
+  a {
+    font-family: sans-serif; /* A clean, modern font for readability. */
+    font-size: 2rem; /* Makes the link text quite large. */
+    color: #333; /* A dark gray color for good contrast. */
+  }
+
+
+// First, we grab a reference to our main SVG element that contains all the eyes.
+  const eyesSVG = document.querySelector('#eyes');
+
+  // We'll create an array to easily manage both the left and right eyes.
+  // Each object in the array will hold references to an eye's main shape and its pupil,
+  // along with an 'offsetX' property we'll calculate later for proper positioning.
+  const eyes = [
+    {
+      eye: eyesSVG.querySelector('#eye-left'),    // Reference to the left eye's outer shape
+      pupil: eyesSVG.querySelector('#pupil-left'), // Reference to the left eye's pupil
+      offsetX: 0                                   // Placeholder for horizontal offset calculation
+    },
+    {
+      eye: eyesSVG.querySelector('#eye-right'),   // Reference to the right eye's outer shape
+      pupil: eyesSVG.querySelector('#pupil-right'),// Reference to the right eye's pupil
+      offsetX: 0                                   // Placeholder for horizontal offset calculation
+    }
+  ];
+
+
+// This function calculates and updates the position of a single pupil.
+  // It takes the mouse event (ev) and the specific eye's properties as input.
+  const updateEye = (ev, {eye, pupil, offsetX}) => {
+    // Get the size and position of the current eye on the screen.
+    const eyeRect = eye.getBoundingClientRect();
+    // Calculate the center point of the eye.
+    const centerX = eyeRect.left + eyeRect.width / 2;
+    const centerY = eyeRect.top + eyeRect.height / 2;
+
+    // Determine the distance from the mouse cursor to the center of the eye.
+    const distX = ev.clientX - centerX;
+    const distY = ev.clientY - centerY;
+
+    // Get the size of the pupil to calculate its movement limits.
+    const pupilRect = pupil.getBoundingClientRect();
+    const maxDistX = pupilRect.width / 2;
+    const maxDistY = pupilRect.height / 2;
+
+    // Calculate the angle from the eye's center to the mouse position.
+    const angle = Math.atan2(distY, distX);
+
+    // Determine the new X and Y positions for the pupil, ensuring it stays within the eye's bounds.
+    // We use cosine for X and sine for Y, scaled by the maximum allowed distance.
+    const newPupilX = offsetX + Math.min(maxDistX, Math.max(-maxDistX, Math.cos(angle) * maxDistX));
+    const newPupilY = Math.min(maxDistY, Math.max(-maxDistY, Math.sin(angle) * maxDistY));
+    
+    // Get the SVG's transformation matrix to correctly scale pupil movement.
+    const svgCTM = eyesSVG.getScreenCTM();
+    // Scale the pupil's movement based on the SVG's current scaling.
+    const scaledPupilX = newPupilX / svgCTM.a;  
+    const scaledPupilY = newPupilY / svgCTM.d;
+
+    // Apply the calculated translation to the pupil using an SVG transform.
+    pupil.setAttribute('transform', `translate(${scaledPupilX}, ${scaledPupilY})`);
+  }
+  
+  
+   // This function calculates the initial horizontal offset for each pupil.
+  // This ensures the pupils start in the correct position relative to their eyes.
+  const calcOffset = () => {
+    for (const props of eyes) {
+      // First, remove any existing transform to get the pupil's natural position.
+      props.pupil.removeAttribute('transform');
+      const eyeRect = props.eye.getBoundingClientRect();
+      const pupilRect = props.pupil.getBoundingClientRect();
+      // Calculate the offset needed to center the pupil horizontally within the eye's available space.
+      props.offsetX = ((eyeRect.right - pupilRect.right) - (pupilRect.left - eyeRect.left)) / 2;
+    }
+  }
+  // Call calcOffset once when the script loads to set initial pupil positions.
+  calcOffset();
+
+  // Listen for window resize events to recalculate pupil offsets.
+  // This keeps the eyes responsive and ensures pupils stay centered even if the page scales.
+  globalThis.addEventListener('resize', () => {
+    calcOffset();
+  });
+
+  // This variable will hold our animation frame ID, helping us make animations smooth.
+  let frame = 0;
+  // Listen for mouse movement across the entire window.
+  globalThis.addEventListener('mousemove', (ev) => {
+    // Cancel any pending animation frame to prevent jerky movements.
+    cancelAnimationFrame(frame);
+    // Request a new animation frame for the next visual update.
+    // This ensures updates happen at the browser's optimal refresh rate.
+    frame = requestAnimationFrame(() => {
+      // For each eye, update its pupil's position based on the current mouse coordinates.
+      for (const eye of eyes) {
+        updateEye(ev, eye);
+      }
+    });
+  });
+  
+  
+  
+  
+  </svg>
+  <p><a target="_top" href="https://dbushell.com/2025/07/11/croissant-no-framework-web-app/">The 👀 are Watching YOU👻</a></p>
+  
+</body>
+</html>
