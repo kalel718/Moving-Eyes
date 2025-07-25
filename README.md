@@ -4,7 +4,7 @@ A playful, interactive SVG web component where the eyes follow your mouse!
 No frameworks, just pure HTML, CSS, and JavaScript.  
 Perfect for landing pages, fun portfolios, or just to make your site a little more... *watchful*. 😏
 
-[Live Demo & Blog Post](https://dbushell.com/2025/07/11/croissant-no-framework-web-app/)  
+[Live Demo & Blog Post](https://kalel718.github.io/Moving-Eyes/)  
 *The 👀 are Watching YOU 👻*
 
 ---
