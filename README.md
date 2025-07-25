@@ -37,6 +37,4 @@ https://github.com/kalel718/Moving-Eyes
 
 
 
-
-
-<img width="1210" height="824" alt="Image" src="https://github.com/user-attachments/assets/a91c566b-c966-4d22-b752-9f11b6d22bc6" />
+https://github.com/user-attachments/assets/4d029a4a-de4d-4c70-b5ba-378bf12e9658
