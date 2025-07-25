@@ -35,6 +35,4 @@ https://github.com/kalel718/Moving-Eyes
 
 
 
-
-
-https://github.com/user-attachments/assets/4d029a4a-de4d-4c70-b5ba-378bf12e9658
+![Image](https://github.com/user-attachments/assets/3eb1d4f6-461e-4ac9-aa9c-a5dc182decd5)
