@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moving Eyes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+ <!-- This is our main SVG canvas, where the magic of the eyes will happen. -->
+<!-- It sets up the size and internal coordinate system for our drawing. -->
+
+  <svg id="eyes" width="128" viewbox="0 0 128 128">
+  <defs>
+    <!-- We're defining a subtle dark gradient here, perfect for giving the pupils some depth. -->
+    <linearGradient id="a" x1="0" x2="0" y1="46.676" y2="82.083" gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color:#ff0000"/>
+      <stop offset="1" style="stop-color:#212121"/>
+    </linearGradient>
+
+    <!-- This group defines the basic shape of one eye, including its white part and inner outline. -->
+    <!-- We'll reuse this shape for both the left and right eyes, saving us some typing! -->
+    <g id="eye-shape">
+      <path style="fill:#fafafa" d="M34.16 106.51C18.73 106.51 6.19 87.44 6.19 64s12.55-42.51 27.97-42.51S62.13 40.56 62.13 64s-12.55 42.51-27.97 42.51"/>
+      <path style="fill:#12345" d="M34.16 23.49c6.63 0 12.98 4 17.87 11.27 5.22 7.75 8.1 18.14 8.1 29.24s-2.88 21.49-8.1 29.24c-4.89 7.27-11.24 11.27-17.87 11.27s-12.98-4-17.87-11.27C11.06 85.49 8.19 75.1 8.19 64s2.88-21.49 8.1-29.24c4.89-7.27 11.23-11.27 17.87-11.27m0-4C17.61 19.49 4.19 39.42 4.19 64s13.42 44.51 29.97 44.51S64.13 88.58 64.13 64 50.71 19.49 34.16 19.49"/>
+    </g>
+
+    <!-- This path defines the shape of a single pupil, ready to be filled with our gradient. -->
+    <path id="pupil-shape" style="fill:url(#a)" d="M25.63 59.84c-2.7-2.54-2.1-7.58 1.36-11.26.18-.19.36-.37.55-.54-1.54-.87-3.23-1.36-5.01-1.36-7.19 0-13.02 7.93-13.02 17.7s5.83 17.7 13.02 17.7 13.02-7.93 13.02-17.7c0-1.75-.19-3.45-.54-5.05-3.24 2.33-7.11 2.64-9.38.51"/>
+  </defs>
+
+
+     <!-- Here we're drawing the left eye, using the 'eye-shape' we defined earlier. -->
+  <use href="#eye-shape" id="eye-left"/>
+  <!-- And now, we draw the left pupil, using our 'pupil-shape' and its gradient fill. -->
+  <use href="#pupil-shape" id="pupil-left"/>
+
+
+<!-- This group holds the right eye and pupil, and we're moving it horizontally to position it. -->
+  <g transform="translate(59.68 0)">
+    <!-- Drawing the right eye, again reusing our defined 'eye-shape'. -->
+    <use href="#eye-shape" id="eye-right" />
+    <!-- And finally, the right pupil, also using its defined shape and gradient. -->
+    <use href="#pupil-shape" id="pupil-right"/>
+  </g>
+
+
+
+
+
+
+  </svg>
+  <p><a target="_top" href="https://dbushell.com/2025/07/11/croissant-no-framework-web-app/">The 👀 are Watching YOU👻</a></p>
+
+  <script src="script.js">
+
+  </script>
+
+</body>
+</html>

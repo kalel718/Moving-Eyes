@@ -1,0 +1,26 @@
+/* This rule styles our main SVG container for the eyes. */
+  /* --size is a CSS variable, making it easy to control the size of the eyes. */
+  /* clamp() helps the eyes scale nicely between a min (64px) and max (256px) size, */
+  /* while 30vi (30% of viewport inline size) makes them responsive to screen width. */
+  #eyes {
+    --size: clamp(64px, 30vi, 256px);
+    block-size: var(--size); /* Sets the height of the SVG */
+    inline-size: var(--size); /* Sets the width of the SVG */
+  }
+
+  /* These styles are for the entire webpage body. */
+  body {
+    background: aqua; /* Gives our page a nice, warm background color. */
+    block-size: 100vb; /* Ensures the body takes up the full height of the viewport. */
+    display: grid; /* We're using CSS Grid to easily center and arrange content. */
+    grid-template-rows: 2fr 1fr; /* Divides the page into two rows: the top one twice as tall. */
+    place-items: center; /* Centers everything both horizontally and vertically within its grid area. */
+    text-align: center; /* Ensures any inline text content is centered. */
+  }
+
+  /* This styles the 'What's this about?' link. */
+  a {
+    font-family: sans-serif; /* A clean, modern font for readability. */
+    font-size: 2rem; /* Makes the link text quite large. */
+    color: #333; /* A dark gray color for good contrast. */
+  }
