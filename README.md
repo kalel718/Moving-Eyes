@@ -1,9 +1,34 @@
-# Moving-Eyes
-Moving Eyes using HTML,CSS and JS
+# 👀 Moving Eyes
 
-"Dive into this playful web experiment featuring a pair of interactive SVG eyes that charmingly follow your mouse cursor across the screen. This project is a neat demonstration of how powerful SVG can be for creating scalable, dynamic graphics, combined with CSS for styling and vanilla JavaScript to bring simple, delightful interactivity to life. It's a fun way to explore event handling and SVG transformations, proving that even small details can add a lot of character to a web page."
+A playful, interactive SVG web component where the eyes follow your mouse!  
+No frameworks, just pure HTML, CSS, and JavaScript.  
+Perfect for landing pages, fun portfolios, or just to make your site a little more... *watchful*. 😏
 
+[Live Demo & Blog Post](https://dbushell.com/2025/07/11/croissant-no-framework-web-app/)  
+*The 👀 are Watching YOU 👻*
 
+---
+
+## ✨ Features
+
+- **SVG Magic:** Crisp, scalable eyes drawn with SVG.
+- **Responsive Design:** Eyes scale smoothly from mobile to desktop.
+- **No Frameworks:** Just HTML, CSS, and vanilla JS.
+- **Smooth Animation:** Pupils follow your mouse in real time.
+- **Easy to Customize:** Tweak colors, gradients, and sizes to fit your vibe.
+
+---
+
+## 🚀 Quick Start
+
+1. **Clone the repo:**
+   ```bash
+   git clone https://github.com/kalel718/moving-eyes.git
+   cd moving-eyes
+
+## 📸 Preview
+
+https://github.com/kalel718/Moving-Eyes
 
 
 
